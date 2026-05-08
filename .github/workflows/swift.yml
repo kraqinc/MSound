@@ -25,7 +25,7 @@ jobs:
                              ENTITLEMENTS_REQUIRED=NO
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: MSound-Archive
           path: MSound.xcarchive
