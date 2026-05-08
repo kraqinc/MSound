@@ -1,22 +1,32 @@
-# This workflow will build a Swift project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
-
-name: Swift
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+name: Build MSound
+on: [push]
 
 jobs:
   build:
-
     runs-on: macos-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      - uses: actions/checkout@v3
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode Project
+        run: xcodegen generate
+
+      - name: Build and Archive
+        run: |
+          xcodebuild archive -project MSound.xcodeproj \
+                             -scheme MSound \
+                             -archivePath MSound.xcarchive \
+                             -sdk iphoneos \
+                             -configuration Release \
+                             CODE_SIGNING_ALLOWED=NO \
+                             CODE_SIGNING_REQUIRED=NO \
+                             ENTITLEMENTS_REQUIRED=NO
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: MSound-Archive
+          path: MSound.xcarchive
+          
