@@ -43,3 +43,23 @@ struct HomeView: View {
         }
     }
 }
+
+struct SearchView: View {
+    var body: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            Text("Próximamente: Buscador de Hits 🔍")
+                .foregroundColor(.white)
+        }
+    }
+}
+
+struct LibraryView: View {
+    var body: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            Text("Tu Biblioteca de otro nivel 🎵")
+                .foregroundColor(.white)
+        }
+    }
+}
