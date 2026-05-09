@@ -1,2 +1,3 @@
 @echo off
-echo Simulando Gradle en Windows
+if not exist gradle\wrapper\gradle-wrapper.jar (echo Descargando Gradle...)
+./gradlew %*
