@@ -1,30 +1,26 @@
 name: Build MSound
 on: [push]
-
 jobs:
   build:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Install XcodeGen
         run: brew install xcodegen
-
       - name: Generate Xcode Project
         run: xcodegen generate
-
       - name: Build and Archive
         run: |
           xcodebuild archive -project MSound.xcodeproj \
                              -scheme MSound \
                              -archivePath MSound.xcarchive \
+                             -destination 'generic/platform=iOS' \
                              -sdk iphoneos \
                              -configuration Release \
-                             -destination 'generic/platform=iOS' \
                              CODE_SIGNING_ALLOWED=NO \
                              CODE_SIGNING_REQUIRED=NO \
-                             ENTITLEMENTS_REQUIRED=NO
-
+                             ENTITLEMENTS_REQUIRED=NO \
+                             COMPILER_INDEX_STORE_ENABLE=NO
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
